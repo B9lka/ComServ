@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutoSvr", "AutoSvr\AutoSvr.vcxproj", "{B06E1625-FA5D-4B37-BCDD-B784868645DD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutoSvrPS", "AutoSvr\AutoSvrPS.vcxproj", "{BD9CDB18-3986-42D1-9665-915B73B6EC39}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B06E1625-FA5D-4B37-BCDD-B784868645DD} = {B06E1625-FA5D-4B37-BCDD-B784868645DD}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B06E1625-FA5D-4B37-BCDD-B784868645DD}.Debug|x64.ActiveCfg = Debug|x64
+		{B06E1625-FA5D-4B37-BCDD-B784868645DD}.Debug|x64.Build.0 = Debug|x64
+		{B06E1625-FA5D-4B37-BCDD-B784868645DD}.Debug|x86.ActiveCfg = Debug|Win32
+		{B06E1625-FA5D-4B37-BCDD-B784868645DD}.Debug|x86.Build.0 = Debug|Win32
+		{B06E1625-FA5D-4B37-BCDD-B784868645DD}.Release|x64.ActiveCfg = Release|x64
+		{B06E1625-FA5D-4B37-BCDD-B784868645DD}.Release|x64.Build.0 = Release|x64
+		{B06E1625-FA5D-4B37-BCDD-B784868645DD}.Release|x86.ActiveCfg = Release|Win32
+		{B06E1625-FA5D-4B37-BCDD-B784868645DD}.Release|x86.Build.0 = Release|Win32
+		{BD9CDB18-3986-42D1-9665-915B73B6EC39}.Debug|x64.ActiveCfg = Debug|x64
+		{BD9CDB18-3986-42D1-9665-915B73B6EC39}.Debug|x86.ActiveCfg = Debug|Win32
+		{BD9CDB18-3986-42D1-9665-915B73B6EC39}.Release|x64.ActiveCfg = Release|x64
+		{BD9CDB18-3986-42D1-9665-915B73B6EC39}.Release|x86.ActiveCfg = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
