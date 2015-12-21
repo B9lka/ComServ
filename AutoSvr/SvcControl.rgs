@@ -1,0 +1,26 @@
+HKCR
+{
+	SvcControl.SvcControlComponent.1 = s 'SvcControl Class'
+	{
+		CLSID = s '{CCE632FB-6FEB-497C-BD71-74E99DE8447E}'
+	}
+	SvcControl.SvcControlComponent = s 'SvcControl Class'
+	{		
+		CurVer = s 'SvcControl.SvcControlComponent.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {CCE632FB-6FEB-497C-BD71-74E99DE8447E} = s 'SvcControl Class'
+		{
+			ProgID = s 'SvcControl.SvcControlComponent.1'
+			VersionIndependentProgID = s 'SvcControl.SvcControlComponent'
+			ForceRemove Programmable
+			LocalServer32 = s '%MODULE%'
+			{
+				val ServerExecutable = s '%MODULE_RAW%'
+			}
+			TypeLib = s '{8AC91E1C-9176-4902-AB5A-DD67AEFD508D}'
+			Version = s '1.0'
+		}
+	}
+}
