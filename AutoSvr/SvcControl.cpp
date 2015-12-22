@@ -6,7 +6,7 @@
 
 // CSvcControl
 
-STDMETHODIMP CSvcControl::DoStartSvc(BSTR	*result)
+STDMETHODIMP CSvcControl::DoStartSvc(LPCWSTR szSvcName, BSTR	*result)
 {
 	SERVICE_STATUS_PROCESS ssStatus;
 	DWORD dwOldCheckPoint;
@@ -222,7 +222,7 @@ STDMETHODIMP CSvcControl::DoStartSvc(BSTR	*result)
 	return S_OK;
 }
 
-STDMETHODIMP CSvcControl::DoUpdateSvcDacl(BSTR * result)
+STDMETHODIMP CSvcControl::DoUpdateSvcDacl(LPCWSTR szSvcName, BSTR * result)
 {
 	EXPLICIT_ACCESS      ea;
 	SECURITY_DESCRIPTOR  sd;
@@ -343,7 +343,12 @@ STDMETHODIMP CSvcControl::DoUpdateSvcDacl(BSTR * result)
 		printf("SetServiceObjectSecurity failed(%d)\n", GetLastError());
 		goto dacl_cleanup;
 	}
-	else printf("Service DACL updated successfully\n");
+	else
+	{
+		printf("Service DACL updated successfully\n");
+		return S_OK;
+	}
+	
 
 dacl_cleanup:
 	CloseServiceHandle(schSCManager);
@@ -355,7 +360,7 @@ dacl_cleanup:
 		HeapFree(GetProcessHeap(), 0, (LPVOID)psd);
 }
 
-STDMETHODIMP CSvcControl::DoStopSvc(BSTR * result)
+STDMETHODIMP CSvcControl::DoStopSvc(LPCWSTR szSvcName, BSTR * result)
 {
 	SERVICE_STATUS_PROCESS ssp;
 	DWORD dwStartTime = GetTickCount();
@@ -495,6 +500,7 @@ STDMETHODIMP CSvcControl::DoStopSvc(BSTR * result)
 		}
 	}
 	printf("Service stopped successfully\n");
+	return S_OK;
 
 stop_cleanup:
 	CloseServiceHandle(schService);

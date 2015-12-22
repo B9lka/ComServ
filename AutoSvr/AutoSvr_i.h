@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Mon Dec 21 15:48:59 2015
+/* at Tue Dec 22 04:54:39 2015
  */
 /* Compiler settings for AutoSvr.idl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -89,12 +89,15 @@ EXTERN_C const IID IID_ISvcControl;
     {
     public:
         virtual HRESULT STDMETHODCALLTYPE DoStartSvc( 
+            /* [in] */ LPCWSTR szSvcName,
             /* [retval][out] */ BSTR *result) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE DoUpdateSvcDacl( 
+            /* [in] */ LPCWSTR szSvcName,
             /* [retval][out] */ BSTR *result) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE DoStopSvc( 
+            /* [in] */ LPCWSTR szSvcName,
             /* [retval][out] */ BSTR *result) = 0;
         
     };
@@ -157,14 +160,17 @@ EXTERN_C const IID IID_ISvcControl;
         
         HRESULT ( STDMETHODCALLTYPE *DoStartSvc )( 
             ISvcControl * This,
+            /* [in] */ LPCWSTR szSvcName,
             /* [retval][out] */ BSTR *result);
         
         HRESULT ( STDMETHODCALLTYPE *DoUpdateSvcDacl )( 
             ISvcControl * This,
+            /* [in] */ LPCWSTR szSvcName,
             /* [retval][out] */ BSTR *result);
         
         HRESULT ( STDMETHODCALLTYPE *DoStopSvc )( 
             ISvcControl * This,
+            /* [in] */ LPCWSTR szSvcName,
             /* [retval][out] */ BSTR *result);
         
         END_INTERFACE
@@ -203,14 +209,14 @@ EXTERN_C const IID IID_ISvcControl;
     ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
 
 
-#define ISvcControl_DoStartSvc(This,result)	\
-    ( (This)->lpVtbl -> DoStartSvc(This,result) ) 
+#define ISvcControl_DoStartSvc(This,szSvcName,result)	\
+    ( (This)->lpVtbl -> DoStartSvc(This,szSvcName,result) ) 
 
-#define ISvcControl_DoUpdateSvcDacl(This,result)	\
-    ( (This)->lpVtbl -> DoUpdateSvcDacl(This,result) ) 
+#define ISvcControl_DoUpdateSvcDacl(This,szSvcName,result)	\
+    ( (This)->lpVtbl -> DoUpdateSvcDacl(This,szSvcName,result) ) 
 
-#define ISvcControl_DoStopSvc(This,result)	\
-    ( (This)->lpVtbl -> DoStopSvc(This,result) ) 
+#define ISvcControl_DoStopSvc(This,szSvcName,result)	\
+    ( (This)->lpVtbl -> DoStopSvc(This,szSvcName,result) ) 
 
 #endif /* COBJMACROS */
 

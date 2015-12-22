@@ -6,7 +6,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Mon Dec 21 15:48:59 2015
+/* at Tue Dec 22 04:54:39 2015
  */
 /* Compiler settings for AutoSvr.idl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 

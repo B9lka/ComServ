@@ -10,12 +10,12 @@ import "ocidl.idl";
 [ object, uuid(B89677AD-4C07-4CF8-96E2-366FD3E9497F), dual, nonextensible, pointer_default(unique) ]
 interface ISvcControl : IDispatch
 {
-	HRESULT DoStartSvc([out, retval] BSTR *result);
-	HRESULT DoUpdateSvcDacl([out, retval] BSTR *result);
-	HRESULT DoStopSvc([out, retval] BSTR *result);
+	HRESULT DoStartSvc([in] LPCWSTR szSvcName, [out, retval] BSTR *result);
+	HRESULT DoUpdateSvcDacl([in] LPCWSTR szSvcName, [out, retval] BSTR *result);
+	HRESULT DoStopSvc([in] LPCWSTR szSvcName, [out, retval] BSTR *result);
 };
 
-[ uuid(8AC91E1C-9176-4902-AB5A-DD67AEFD508D), version(1.0), ]
+[ uuid(8AC91E1C-9176-4902-AB5A-DD67AEFD508D), version(1.0) ]
 library AutoSvrLib
 {
 	importlib("stdole2.tlb");

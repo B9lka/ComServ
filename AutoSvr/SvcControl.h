@@ -9,7 +9,6 @@
 /*
 #include <windows.h>
 #include <tchar.h>
-#include <strsafe.h>
 #include <stdio.h>
 */
 
@@ -56,16 +55,15 @@ public:
 	}
 private:
 	TCHAR szCommand[10];
-	TCHAR szSvcName[80];
+	//TCHAR szSvcName[80];
 	SC_HANDLE schSCManager;
 	SC_HANDLE schService;
 
 public:
-	STDMETHOD(DoStartSvc)(BSTR* result);
-	STDMETHOD(DoUpdateSvcDacl)(BSTR* result);
-	STDMETHOD(DoStopSvc)(BSTR* result);
+	STDMETHOD(DoStartSvc)(LPCWSTR szSvcName, BSTR* result);
+	STDMETHOD(DoUpdateSvcDacl)(LPCWSTR szSvcName, BSTR* result);
+	STDMETHOD(DoStopSvc)(LPCWSTR szSvcName, BSTR* result);
 	BOOL __stdcall StopDependentServices(void);
-
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(SvcControlComponent), CSvcControl)
