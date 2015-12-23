@@ -3,7 +3,6 @@
 #include "stdafx.h"
 #include "SvcControl.h"
 
-
 // CSvcControl
 
 STDMETHODIMP CSvcControl::DoStartSvc(LPCWSTR szSvcName, BSTR	*result)
@@ -23,7 +22,8 @@ STDMETHODIMP CSvcControl::DoStartSvc(LPCWSTR szSvcName, BSTR	*result)
 
 	if (NULL == schSCManager)
 	{
-		printf("OpenSCManager failed (%d)\n", GetLastError());
+		//printf("OpenSCManager failed (%d)\n", GetLastError());
+		MessageBox(NULL, _T("OpenSCManager failed \n"), NULL , MB_OK);
 		return S_FALSE;
 	}
 
@@ -36,7 +36,8 @@ STDMETHODIMP CSvcControl::DoStartSvc(LPCWSTR szSvcName, BSTR	*result)
 
 	if (schService == NULL)
 	{
-		printf("OpenService failed (%d)\n", GetLastError());
+		//printf("OpenService failed (%d)\n", GetLastError());
+		MessageBox(NULL, _T("OpenService failed \n"), NULL, MB_OK);
 		CloseServiceHandle(schSCManager);
 		return S_FALSE;
 	}
@@ -50,7 +51,8 @@ STDMETHODIMP CSvcControl::DoStartSvc(LPCWSTR szSvcName, BSTR	*result)
 		sizeof(SERVICE_STATUS_PROCESS), // size of structure
 		&dwBytesNeeded))              // size needed if buffer is too small
 	{
-		printf("QueryServiceStatusEx failed (%d)\n", GetLastError());
+		//printf("QueryServiceStatusEx failed (%d)\n", GetLastError());
+		MessageBox(NULL, _T("QueryServiceStatusEx failed \n"), NULL, MB_OK);
 		CloseServiceHandle(schService);
 		CloseServiceHandle(schSCManager);
 		return S_FALSE;
@@ -61,7 +63,8 @@ STDMETHODIMP CSvcControl::DoStartSvc(LPCWSTR szSvcName, BSTR	*result)
 
 	if (ssStatus.dwCurrentState != SERVICE_STOPPED && ssStatus.dwCurrentState != SERVICE_STOP_PENDING)
 	{
-		printf("Cannot start the service because it is already running\n");
+		//printf("Cannot start the service because it is already running\n");
+		MessageBox(NULL, _T("Cannot start the service because it is already running\n"), NULL, MB_OK);
 		CloseServiceHandle(schService);
 		CloseServiceHandle(schSCManager);
 		return S_FALSE;
@@ -98,7 +101,8 @@ STDMETHODIMP CSvcControl::DoStartSvc(LPCWSTR szSvcName, BSTR	*result)
 			sizeof(SERVICE_STATUS_PROCESS), // size of structure
 			&dwBytesNeeded))              // size needed if buffer is too small
 		{
-			printf("QueryServiceStatusEx failed (%d)\n", GetLastError());
+			//printf("QueryServiceStatusEx failed (%d)\n", GetLastError());
+			MessageBox(NULL, _T("QueryServiceStatusEx failed\n"), NULL, MB_OK);
 			CloseServiceHandle(schService);
 			CloseServiceHandle(schSCManager);
 			return S_FALSE;
@@ -115,7 +119,8 @@ STDMETHODIMP CSvcControl::DoStartSvc(LPCWSTR szSvcName, BSTR	*result)
 		{
 			if (GetTickCount() - dwStartTickCount > ssStatus.dwWaitHint)
 			{
-				printf("Timeout waiting for service to stop\n");
+				//printf("Timeout waiting for service to stop\n");
+				MessageBox(NULL, _T("Timeout waiting for service to stop\n"), NULL, MB_OK);
 				CloseServiceHandle(schService);
 				CloseServiceHandle(schSCManager);
 				return S_FALSE;
@@ -130,12 +135,17 @@ STDMETHODIMP CSvcControl::DoStartSvc(LPCWSTR szSvcName, BSTR	*result)
 		0,           // number of arguments 
 		NULL))      // no arguments 
 	{
-		printf("StartService failed (%d)\n", GetLastError());
+		//printf("StartService failed (%d)\n", GetLastError());
+		MessageBox(NULL, _T("StartService failed\n"), NULL, MB_OK);
 		CloseServiceHandle(schService);
 		CloseServiceHandle(schSCManager);
 		return S_FALSE;
 	}
-	else printf("Service start pending...\n");
+	else
+	{
+		//MessageBox(NULL, _T("Service start pending...\n"), szSvcName, MB_OK);
+		//printf("Service start pending...\n");
+	}
 
 	// Check the status until the service is no longer start pending. 
 
@@ -146,7 +156,8 @@ STDMETHODIMP CSvcControl::DoStartSvc(LPCWSTR szSvcName, BSTR	*result)
 		sizeof(SERVICE_STATUS_PROCESS), // size of structure
 		&dwBytesNeeded))              // if buffer too small
 	{
-		printf("QueryServiceStatusEx failed (%d)\n", GetLastError());
+		//printf("QueryServiceStatusEx failed (%d)\n", GetLastError());
+		MessageBox(NULL, _T("QueryServiceStatusEx failed\n"), NULL, MB_OK);
 		CloseServiceHandle(schService);
 		CloseServiceHandle(schSCManager);
 		return S_FALSE;
@@ -181,7 +192,8 @@ STDMETHODIMP CSvcControl::DoStartSvc(LPCWSTR szSvcName, BSTR	*result)
 			sizeof(SERVICE_STATUS_PROCESS), // size of structure
 			&dwBytesNeeded))              // if buffer too small
 		{
-			printf("QueryServiceStatusEx failed (%d)\n", GetLastError());
+			//printf("QueryServiceStatusEx failed (%d)\n", GetLastError());
+			MessageBox(NULL, _T("QueryServiceStatusEx failed\n"), NULL, MB_OK);
 			break;
 		}
 
@@ -206,7 +218,7 @@ STDMETHODIMP CSvcControl::DoStartSvc(LPCWSTR szSvcName, BSTR	*result)
 
 	if (ssStatus.dwCurrentState == SERVICE_RUNNING)
 	{
-		printf("Service started successfully.\n");
+		MessageBox(NULL, _T("Service started successfully.\n"), szSvcName, MB_OK);
 	}
 	else
 	{
@@ -215,6 +227,7 @@ STDMETHODIMP CSvcControl::DoStartSvc(LPCWSTR szSvcName, BSTR	*result)
 		printf("  Exit Code: %d\n", ssStatus.dwWin32ExitCode);
 		printf("  Check Point: %d\n", ssStatus.dwCheckPoint);
 		printf("  Wait Hint: %d\n", ssStatus.dwWaitHint);
+
 	}
 
 	CloseServiceHandle(schService);
@@ -244,7 +257,8 @@ STDMETHODIMP CSvcControl::DoUpdateSvcDacl(LPCWSTR szSvcName, BSTR * result)
 
 	if (NULL == schSCManager)
 	{
-		printf("OpenSCManager failed (%d)\n", GetLastError());
+		//printf("OpenSCManager failed (%d)\n", GetLastError());
+		MessageBox(NULL, _T("OpenSCManager failed\n"), NULL, MB_OK);
 		return S_FALSE;
 	}
 
@@ -257,7 +271,8 @@ STDMETHODIMP CSvcControl::DoUpdateSvcDacl(LPCWSTR szSvcName, BSTR * result)
 
 	if (schService == NULL)
 	{
-		printf("OpenService failed (%d)\n", GetLastError());
+		//printf("OpenService failed (%d)\n", GetLastError());
+		MessageBox(NULL, _T("OpenService failed\n"), NULL, MB_OK);
 		CloseServiceHandle(schSCManager);
 		return S_FALSE;
 	}
@@ -278,20 +293,23 @@ STDMETHODIMP CSvcControl::DoUpdateSvcDacl(LPCWSTR szSvcName, BSTR * result)
 			if (psd == NULL)
 			{
 				// Note: HeapAlloc does not support GetLastError.
-				printf("HeapAlloc failed\n");
+				MessageBox(NULL, _T("HeapAlloc failed\n"), NULL, MB_OK);
+				//printf("HeapAlloc failed\n");
 				goto dacl_cleanup;
 			}
 
 			if (!QueryServiceObjectSecurity(schService,
 				DACL_SECURITY_INFORMATION, psd, dwSize, &dwBytesNeeded))
 			{
-				printf("QueryServiceObjectSecurity failed (%d)\n", GetLastError());
+				MessageBox(NULL, _T("QueryServiceObjectSecurity failed\n"), NULL, MB_OK);
+				//printf("QueryServiceObjectSecurity failed (%d)\n", GetLastError());
 				goto dacl_cleanup;
 			}
 		}
 		else
 		{
-			printf("QueryServiceObjectSecurity failed (%d)\n", GetLastError());
+			MessageBox(NULL, _T("QueryServiceObjectSecurity failed\n"), NULL, MB_OK);
+			//printf("QueryServiceObjectSecurity failed (%d)\n", GetLastError());
 			goto dacl_cleanup;
 		}
 	}
@@ -301,7 +319,8 @@ STDMETHODIMP CSvcControl::DoUpdateSvcDacl(LPCWSTR szSvcName, BSTR * result)
 	if (!GetSecurityDescriptorDacl(psd, &bDaclPresent, &pacl,
 		&bDaclDefaulted))
 	{
-		printf("GetSecurityDescriptorDacl failed(%d)\n", GetLastError());
+		MessageBox(NULL, _T("GetSecurityDescriptorDacl failed\n"), NULL, MB_OK);
+		//printf("GetSecurityDescriptorDacl failed(%d)\n", GetLastError());
 		goto dacl_cleanup;
 	}
 
@@ -314,7 +333,8 @@ STDMETHODIMP CSvcControl::DoUpdateSvcDacl(LPCWSTR szSvcName, BSTR * result)
 	dwError = SetEntriesInAcl(1, &ea, pacl, &pNewAcl);
 	if (dwError != ERROR_SUCCESS)
 	{
-		printf("SetEntriesInAcl failed(%d)\n", dwError);
+		MessageBox(NULL, _T("SetEntriesInAcl failed\n"), NULL, MB_OK);
+		//printf("SetEntriesInAcl failed(%d)\n", dwError);
 		goto dacl_cleanup;
 	}
 
@@ -323,7 +343,8 @@ STDMETHODIMP CSvcControl::DoUpdateSvcDacl(LPCWSTR szSvcName, BSTR * result)
 	if (!InitializeSecurityDescriptor(&sd,
 		SECURITY_DESCRIPTOR_REVISION))
 	{
-		printf("InitializeSecurityDescriptor failed(%d)\n", GetLastError());
+		MessageBox(NULL, _T("InitializeSecurityDescriptor failed\n"), NULL, MB_OK);
+		//printf("InitializeSecurityDescriptor failed(%d)\n", GetLastError());
 		goto dacl_cleanup;
 	}
 
@@ -331,7 +352,8 @@ STDMETHODIMP CSvcControl::DoUpdateSvcDacl(LPCWSTR szSvcName, BSTR * result)
 
 	if (!SetSecurityDescriptorDacl(&sd, TRUE, pNewAcl, FALSE))
 	{
-		printf("SetSecurityDescriptorDacl failed(%d)\n", GetLastError());
+		MessageBox(NULL, _T("SetSecurityDescriptorDacl failed\n"), NULL, MB_OK);
+		//printf("SetSecurityDescriptorDacl failed(%d)\n", GetLastError());
 		goto dacl_cleanup;
 	}
 
@@ -340,12 +362,14 @@ STDMETHODIMP CSvcControl::DoUpdateSvcDacl(LPCWSTR szSvcName, BSTR * result)
 	if (!SetServiceObjectSecurity(schService,
 		DACL_SECURITY_INFORMATION, &sd))
 	{
-		printf("SetServiceObjectSecurity failed(%d)\n", GetLastError());
+		MessageBox(NULL, _T("SetServiceObjectSecurity failed\n"), NULL, MB_OK);
+		//printf("SetServiceObjectSecurity failed(%d)\n", GetLastError());
 		goto dacl_cleanup;
 	}
 	else
 	{
-		printf("Service DACL updated successfully\n");
+		MessageBox(NULL, _T("Service DACL updated successfully\n"), szSvcName, MB_OK);
+		//printf("Service DACL updated successfully\n");
 		return S_OK;
 	}
 	
@@ -358,6 +382,7 @@ dacl_cleanup:
 		LocalFree((HLOCAL)pNewAcl);
 	if (NULL != psd)
 		HeapFree(GetProcessHeap(), 0, (LPVOID)psd);
+	return S_FALSE;
 }
 
 STDMETHODIMP CSvcControl::DoStopSvc(LPCWSTR szSvcName, BSTR * result)
@@ -377,7 +402,8 @@ STDMETHODIMP CSvcControl::DoStopSvc(LPCWSTR szSvcName, BSTR * result)
 
 	if (NULL == schSCManager)
 	{
-		printf("OpenSCManager failed (%d)\n", GetLastError());
+		//printf("OpenSCManager failed (%d)\n", GetLastError());
+		MessageBox(NULL, _T("OpenSCManager failed\n"), NULL, MB_OK);
 		return S_FALSE;
 	}
 
@@ -392,7 +418,8 @@ STDMETHODIMP CSvcControl::DoStopSvc(LPCWSTR szSvcName, BSTR * result)
 
 	if (schService == NULL)
 	{
-		printf("OpenService failed (%d)\n", GetLastError());
+		//printf("OpenService failed (%d)\n", GetLastError());
+		MessageBox(NULL, _T("OpenService failed\n"), NULL, MB_OK);
 		CloseServiceHandle(schSCManager);
 		return S_FALSE;
 	}
@@ -406,13 +433,15 @@ STDMETHODIMP CSvcControl::DoStopSvc(LPCWSTR szSvcName, BSTR * result)
 		sizeof(SERVICE_STATUS_PROCESS),
 		&dwBytesNeeded))
 	{
-		printf("QueryServiceStatusEx failed (%d)\n", GetLastError());
+		//printf("QueryServiceStatusEx failed (%d)\n", GetLastError());
+		MessageBox(NULL, _T("QueryServiceStatusEx failed\n"), NULL, MB_OK);
 		goto stop_cleanup;
 	}
 
 	if (ssp.dwCurrentState == SERVICE_STOPPED)
 	{
-		printf("Service is already stopped.\n");
+		//printf("Service is already stopped.\n");
+		MessageBox(NULL, _T("Service is already stopped.\n"), NULL, MB_OK);
 		goto stop_cleanup;
 	}
 
@@ -420,7 +449,9 @@ STDMETHODIMP CSvcControl::DoStopSvc(LPCWSTR szSvcName, BSTR * result)
 
 	while (ssp.dwCurrentState == SERVICE_STOP_PENDING)
 	{
-		printf("Service stop pending...\n");
+		//printf("Service stop pending...\n");
+		//MessageBox(NULL, _T("Service stop pending...\n"), NULL, MB_OK);
+
 
 		// Do not wait longer than the wait hint. A good interval is 
 		// one-tenth of the wait hint but not less than 1 second  
@@ -442,19 +473,23 @@ STDMETHODIMP CSvcControl::DoStopSvc(LPCWSTR szSvcName, BSTR * result)
 			sizeof(SERVICE_STATUS_PROCESS),
 			&dwBytesNeeded))
 		{
-			printf("QueryServiceStatusEx failed (%d)\n", GetLastError());
+
+			//printf("QueryServiceStatusEx failed (%d)\n", GetLastError());
+			MessageBox(NULL, _T("QueryServiceStatusEx failed\n"), NULL, MB_OK);
 			goto stop_cleanup;
 		}
 
 		if (ssp.dwCurrentState == SERVICE_STOPPED)
 		{
-			printf("Service stopped successfully.\n");
+			//printf("Service stopped successfully.\n");
+			MessageBox(NULL, _T("Service stopped successfully.\n"), szSvcName, MB_OK);
 			goto stop_cleanup;
 		}
 
 		if (GetTickCount() - dwStartTime > dwTimeout)
 		{
-			printf("Service stop timed out.\n");
+			//printf("Service stop timed out.\n");
+			MessageBox(NULL, _T("Service stop timed out.\n"), NULL, MB_OK);
 			goto stop_cleanup;
 		}
 	}
@@ -470,7 +505,8 @@ STDMETHODIMP CSvcControl::DoStopSvc(LPCWSTR szSvcName, BSTR * result)
 		SERVICE_CONTROL_STOP,
 		(LPSERVICE_STATUS)&ssp))
 	{
-		printf("ControlService failed (%d)\n", GetLastError());
+		//printf("ControlService failed (%d)\n", GetLastError());
+		MessageBox(NULL, _T("ControlService failed\n"), NULL, MB_OK);
 		goto stop_cleanup;
 	}
 
@@ -486,7 +522,8 @@ STDMETHODIMP CSvcControl::DoStopSvc(LPCWSTR szSvcName, BSTR * result)
 			sizeof(SERVICE_STATUS_PROCESS),
 			&dwBytesNeeded))
 		{
-			printf("QueryServiceStatusEx failed (%d)\n", GetLastError());
+			//printf("QueryServiceStatusEx failed (%d)\n", GetLastError());
+			MessageBox(NULL, _T("QueryServiceStatusEx failed\n"), NULL, MB_OK);
 			goto stop_cleanup;
 		}
 
@@ -495,16 +532,19 @@ STDMETHODIMP CSvcControl::DoStopSvc(LPCWSTR szSvcName, BSTR * result)
 
 		if (GetTickCount() - dwStartTime > dwTimeout)
 		{
-			printf("Wait timed out\n");
+			//printf("Wait timed out\n");
+			MessageBox(NULL, _T("Wait timed out\n"), NULL, MB_OK);
 			goto stop_cleanup;
 		}
 	}
-	printf("Service stopped successfully\n");
+	//printf("Service stopped successfully\n");
+	MessageBox(NULL, _T("Service stopped successfully\n"), szSvcName, MB_OK);
 	return S_OK;
 
 stop_cleanup:
 	CloseServiceHandle(schService);
 	CloseServiceHandle(schSCManager);
+	return S_FALSE;
 }
 
 BOOL CSvcControl::StopDependentServices(void)

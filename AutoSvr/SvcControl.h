@@ -3,14 +3,11 @@
 #pragma once
 #include "resource.h"       // main symbols
 #include <aclapi.h>
-
-
 #include "AutoSvr_i.h"
-/*
 #include <windows.h>
 #include <tchar.h>
 #include <stdio.h>
-*/
+
 
 #pragma comment(lib, "advapi32.lib")
 
