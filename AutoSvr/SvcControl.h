@@ -58,7 +58,6 @@ private:
 
 public:
 	STDMETHOD(DoStartSvc)(LPCWSTR szSvcName, BSTR* result);
-	STDMETHOD(DoUpdateSvcDacl)(LPCWSTR szSvcName, BSTR* result);
 	STDMETHOD(DoStopSvc)(LPCWSTR szSvcName, BSTR* result);
 	BOOL __stdcall StopDependentServices(void);
 };

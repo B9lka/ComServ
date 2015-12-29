@@ -11,7 +11,6 @@ import "ocidl.idl";
 interface ISvcControl : IDispatch
 {
 	HRESULT DoStartSvc([in] LPCWSTR szSvcName, [out, retval] BSTR *result);
-	HRESULT DoUpdateSvcDacl([in] LPCWSTR szSvcName, [out, retval] BSTR *result);
 	HRESULT DoStopSvc([in] LPCWSTR szSvcName, [out, retval] BSTR *result);
 };
 

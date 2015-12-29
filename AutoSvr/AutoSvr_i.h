@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Tue Dec 22 15:14:27 2015
+/* at Wed Dec 30 01:03:44 2015
  */
 /* Compiler settings for AutoSvr.idl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -92,10 +92,6 @@ EXTERN_C const IID IID_ISvcControl;
             /* [in] */ LPCWSTR szSvcName,
             /* [retval][out] */ BSTR *result) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE DoUpdateSvcDacl( 
-            /* [in] */ LPCWSTR szSvcName,
-            /* [retval][out] */ BSTR *result) = 0;
-        
         virtual HRESULT STDMETHODCALLTYPE DoStopSvc( 
             /* [in] */ LPCWSTR szSvcName,
             /* [retval][out] */ BSTR *result) = 0;
@@ -163,11 +159,6 @@ EXTERN_C const IID IID_ISvcControl;
             /* [in] */ LPCWSTR szSvcName,
             /* [retval][out] */ BSTR *result);
         
-        HRESULT ( STDMETHODCALLTYPE *DoUpdateSvcDacl )( 
-            ISvcControl * This,
-            /* [in] */ LPCWSTR szSvcName,
-            /* [retval][out] */ BSTR *result);
-        
         HRESULT ( STDMETHODCALLTYPE *DoStopSvc )( 
             ISvcControl * This,
             /* [in] */ LPCWSTR szSvcName,
@@ -211,9 +202,6 @@ EXTERN_C const IID IID_ISvcControl;
 
 #define ISvcControl_DoStartSvc(This,szSvcName,result)	\
     ( (This)->lpVtbl -> DoStartSvc(This,szSvcName,result) ) 
-
-#define ISvcControl_DoUpdateSvcDacl(This,szSvcName,result)	\
-    ( (This)->lpVtbl -> DoUpdateSvcDacl(This,szSvcName,result) ) 
 
 #define ISvcControl_DoStopSvc(This,szSvcName,result)	\
     ( (This)->lpVtbl -> DoStopSvc(This,szSvcName,result) ) 
